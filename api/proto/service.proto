@@ -1,0 +1,58 @@
+//Here we will define all the grpc service and messages using protocol buffer'
+syntax = "proto3";
+
+package user;
+
+option go_package = "./api/proto";
+
+//Services : related rpc methods for user operations
+service UserService{
+  //CreateUser
+  rpc CreateUser (CreateUserRequest) returns (UserResponse);
+  //Get User by Id
+  rpc GetUser (GetUserRequest) returns (UserResponse);
+  //List all users
+  rpc ListUsers (Empty) returns (ListUserResponse);
+  //Update User
+  rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
+  //Delete existing user
+  rpc DeleteUser(DeleteUserRequest) returns (Empty);
+}
+
+//Message for user creation request
+message CreateUserRequest{
+  string name = 1;
+  string email = 2;
+}
+
+//Message to get user by id
+message GetUserRequest{
+  int32 id = 1;
+}
+
+//Message to get user response, containing details
+message UserResponse{
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+//Message to request empty request
+message Empty{}
+
+//Message to respond with list of users
+message ListUserResponse{
+  repeated UserResponse users = 1;
+}
+
+message UpdateUserRequest{
+  int32 id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message DeleteUserRequest{
+  int32 id = 1;
+}
+
+
